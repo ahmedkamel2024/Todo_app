@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:todo_app/app_colors.dart';
 import 'package:todo_app/home/settings/settings_tab.dart';
 import 'package:todo_app/home/task_list/add_task_button_sheet.dart';
 import 'package:todo_app/home/task_list/task_list_tab.dart';
@@ -18,7 +17,7 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        // toolbarHeight: MediaQuery.of(context).size.height*0.2,
+        toolbarHeight: MediaQuery.of(context).size.height * 0.2,
         title: Text(
           'To Do List',
           style: Theme.of(context).textTheme.titleLarge,
@@ -49,11 +48,11 @@ class _HomeScreenState extends State<HomeScreen> {
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       body: Column(
         children: [
-          Container(
-            color: AppColors.primaryColor,
-            width: double.infinity,
-            height: 80,
-          ),
+          // Container(
+          //   color: AppColors.primaryColor,
+          //   width: double.infinity,
+          //   height: 80,
+          // ),
           Expanded(child: selectedIndex == 0 ? TaskListTab() : SettingsTab()),
         ],
       ),
