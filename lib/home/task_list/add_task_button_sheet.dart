@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:todo_app/firebase_utils.dart';
+import 'package:todo_app/model/task.dart';
 
 class AddTaskBottomShet extends StatefulWidget {
   @override
@@ -8,6 +10,8 @@ class AddTaskBottomShet extends StatefulWidget {
 class _AddTaskBottomShetState extends State<AddTaskBottomShet> {
   var formKey = GlobalKey<FormState>();
   var selectedDate = DateTime.now();
+  String title = '';
+  String description = '';
 
   @override
   Widget build(BuildContext context) {
@@ -31,6 +35,9 @@ class _AddTaskBottomShetState extends State<AddTaskBottomShet> {
                       }
                       return null;
                     },
+                    onChanged: (text) {
+                      title = text;
+                    },
                     decoration: InputDecoration(hintText: 'Enter Task Title'),
                   ),
                   SizedBox(height: 10),
@@ -40,6 +47,9 @@ class _AddTaskBottomShetState extends State<AddTaskBottomShet> {
                         return 'please enter task description';
                       }
                       return null;
+                    },
+                    onChanged: (text) {
+                      description = text;
                     },
                     decoration: InputDecoration(
                       hintText: 'Enter Task Describtion',
@@ -79,7 +89,15 @@ class _AddTaskBottomShetState extends State<AddTaskBottomShet> {
   }
 
   void addTask() {
-    if (formKey.currentState?.validate() == true) {}
+    if (formKey.currentState?.validate() == true) {
+      Task task =
+          Task(title: title, description: description, dateTime: selectedDate);
+      FirebaseUtils.AddTaskToFireStore(task).timeout(Duration(seconds: 1),
+          onTimeout: () {
+        print('task added successfully');
+        Navigator.pop(context);
+      });
+    }
   }
 
   void showCalendar() async {
