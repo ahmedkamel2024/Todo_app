@@ -13,15 +13,19 @@ class FirebaseUtils {
   }
 
   static Future<void> AddTaskToFireStore(Task task) {
+    /// collection
     var taskCollection = getTasksCollection();
 
-    /// collection
+    /// document
     DocumentReference<Task> taskRef = taskCollection.doc();
 
-    /// document
+    /// auto Id
     task.id = taskRef.id;
 
-    /// auto Id
     return taskRef.set(task);
+  }
+
+  static Future<void> deleteTaskFromFireStore(Task task) {
+    return getTasksCollection().doc(task.id).delete();
   }
 }

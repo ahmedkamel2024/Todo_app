@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:todo_app/firebase_utils.dart';
 import 'package:todo_app/model/task.dart';
+import 'package:todo_app/provider/list_provider.dart';
 
 class AddTaskBottomShet extends StatefulWidget {
   @override
@@ -12,9 +14,11 @@ class _AddTaskBottomShetState extends State<AddTaskBottomShet> {
   var selectedDate = DateTime.now();
   String title = '';
   String description = '';
+  late ListProvider listProvider;
 
   @override
   Widget build(BuildContext context) {
+    listProvider = Provider.of<ListProvider>(context);
     return Container(
       margin: EdgeInsets.all(20),
       child: Column(
@@ -95,6 +99,7 @@ class _AddTaskBottomShetState extends State<AddTaskBottomShet> {
       FirebaseUtils.AddTaskToFireStore(task).timeout(Duration(seconds: 1),
           onTimeout: () {
         print('task added successfully');
+        listProvider.getTasksFromFireStore();
         Navigator.pop(context);
       });
     }
