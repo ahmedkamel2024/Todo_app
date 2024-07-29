@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:provider/provider.dart';
 import 'package:todo_app/app_colors.dart';
@@ -6,6 +7,8 @@ import 'package:todo_app/firebase_utils.dart';
 import 'package:todo_app/provider/list_provider.dart';
 
 import '../../model/task.dart';
+import '../../provider/app_language_provider.dart';
+import '../../provider/app_mode_provider.dart';
 
 class TaskListItem extends StatelessWidget {
   Task task;
@@ -14,6 +17,8 @@ class TaskListItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var listProvider = Provider.of<ListProvider>(context);
+    var langProvider = Provider.of<AppLanguageProvider>(context);
+    var modeProvider = Provider.of<AppModeProvider>(context);
     return Container(
       margin: EdgeInsets.all(12),
       child: Slidable(
@@ -38,7 +43,7 @@ class TaskListItem extends StatelessWidget {
               backgroundColor: AppColors.redColor,
               foregroundColor: AppColors.whiteColor,
               icon: Icons.delete,
-              label: 'Delete',
+              label: AppLocalizations.of(context)!.delete,
             ),
             SlidableAction(
               borderRadius: BorderRadius.circular(20),
@@ -48,14 +53,16 @@ class TaskListItem extends StatelessWidget {
               backgroundColor: AppColors.primaryColor,
               foregroundColor: Colors.white,
               icon: Icons.edit,
-              label: 'Edit',
+              label: AppLocalizations.of(context)!.edit,
             ),
           ],
         ),
         child: Container(
           padding: EdgeInsets.all(12),
           decoration: BoxDecoration(
-            color: AppColors.whiteColor,
+            color: modeProvider.isDarkMode()
+                ? AppColors.blackColor
+                : AppColors.whiteColor,
             borderRadius: BorderRadius.circular(25),
           ),
           child: Row(
@@ -74,13 +81,19 @@ class TaskListItem extends StatelessWidget {
                   Text(task.title,
                       style: Theme.of(context)
                           .textTheme
-                          .titleLarge
-                          ?.copyWith(color: AppColors.primaryColor)),
+                          .titleLarge?.copyWith(
+                            color: modeProvider.isDarkMode()
+                                ? AppColors.primaryColor
+                                : AppColors.primaryColor,
+                          )),
                   Text(task.description,
                       style: Theme.of(context)
                           .textTheme
-                          .bodyLarge
-                          ?.copyWith(color: AppColors.blackColor)),
+                          .bodyLarge?.copyWith(
+                            color: modeProvider.isDarkMode()
+                                ? AppColors.whiteColor
+                                : AppColors.blackColor,
+                          )),
                 ],
               )),
               Container(

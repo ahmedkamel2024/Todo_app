@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:provider/provider.dart';
 import 'package:todo_app/firebase_utils.dart';
 import 'package:todo_app/model/task.dart';
 import 'package:todo_app/provider/list_provider.dart';
+
+import '../../provider/app_language_provider.dart';
+import '../../provider/app_mode_provider.dart';
 
 class AddTaskBottomShet extends StatefulWidget {
   @override
@@ -15,16 +19,20 @@ class _AddTaskBottomShetState extends State<AddTaskBottomShet> {
   String title = '';
   String description = '';
   late ListProvider listProvider;
+  late AppLanguageProvider langProvider;
+  late AppModeProvider modeProvider;
 
   @override
   Widget build(BuildContext context) {
     listProvider = Provider.of<ListProvider>(context);
+    var langProvider = Provider.of<AppLanguageProvider>(context);
+    var modeProvider = Provider.of<AppModeProvider>(context);
     return Container(
       margin: EdgeInsets.all(20),
       child: Column(
         children: [
           Text(
-            'Add New Task',
+            AppLocalizations.of(context)!.add_new_task,
             style: Theme.of(context).textTheme.titleMedium,
           ),
           Form(
@@ -33,17 +41,17 @@ class _AddTaskBottomShetState extends State<AddTaskBottomShet> {
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
                   TextFormField(
-                    validator: (text) {
-                      if (text == null || text.isEmpty) {
-                        return 'please enter task title';
-                      }
-                      return null;
-                    },
-                    onChanged: (text) {
-                      title = text;
-                    },
-                    decoration: InputDecoration(hintText: 'Enter Task Title'),
-                  ),
+                      validator: (text) {
+                        if (text == null || text.isEmpty) {
+                          return 'please enter task title';
+                        }
+                        return null;
+                      },
+                      onChanged: (text) {
+                        title = text;
+                      },
+                      decoration: InputDecoration(
+                          hintText: AppLocalizations.of(context)!.title)),
                   SizedBox(height: 10),
                   TextFormField(
                     validator: (text) {
@@ -56,14 +64,14 @@ class _AddTaskBottomShetState extends State<AddTaskBottomShet> {
                       description = text;
                     },
                     decoration: InputDecoration(
-                      hintText: 'Enter Task Describtion',
+                      hintText: AppLocalizations.of(context)!.description,
                     ),
                     maxLines: 4,
                   ),
                   SizedBox(height: 10),
                   Padding(
                       padding: const EdgeInsets.all(8.0),
-                      child: Text('Select Date',
+                      child: Text(AppLocalizations.of(context)!.select_time,
                           style: Theme.of(context).textTheme.bodyLarge)),
                   Padding(
                     padding: const EdgeInsets.all(8.0),
@@ -82,7 +90,7 @@ class _AddTaskBottomShetState extends State<AddTaskBottomShet> {
                         addTask();
                       },
                       child: Text(
-                        'Add',
+                        AppLocalizations.of(context)!.add,
                         style: Theme.of(context).textTheme.titleLarge,
                       )),
                 ],
