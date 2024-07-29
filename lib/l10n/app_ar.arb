@@ -1,0 +1,23 @@
+{
+  "app_title": "القايمه",
+  "add_new_task" : "اضافه عمل جديد",
+  "title" : "العنوان",
+  "description" : "الوصف",
+  "select_time" : "اختار الوقت",
+  "add" : "اضافه",
+  "settings" : "الاعدادات",
+  "task_list" : "قايمه الاعمال",
+  "delete" : "مسح",
+  "edit" : "تعديل",
+  "language" : "اللغه",
+  "mode" : "الوضع",
+  "english" : "الانجليزيه",
+  "arabic" : "العربيه",
+  "light" : "مضيء",
+  "dark" : "مظلم",
+  "enter_task_title" : "ادخل عنوان التاسك",
+  "enter_task_desc" : "ادخل وصف التاسك",
+  "edit_task" : "تعديل العمل",
+  "save_changes" : "حفظ التغييرات",
+  "done" : "تم"
+}
